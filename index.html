@@ -1,39 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>FunSchool.com | Haron</title>
+<title>FunSchool.com | Created by Haron</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background: #ecfdf5;
   text-align: center;
 }
 
 header {
   background: linear-gradient(90deg, #2ecc71, #f1c40f);
-  padding: 40px;
+  padding: 50px 20px;
   color: #1f2937;
 }
 
 button {
   background: #3498db;
   color: white;
-  padding: 12px;
-  margin: 8px;
+  padding: 12px 18px;
+  margin: 6px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 button:hover {
   background: #2980b9;
 }
 
-.section { display: none; padding: 20px; }
+.section {
+  display: none;
+  padding: 25px;
+}
 
 .card {
   background: white;
@@ -48,6 +52,7 @@ input {
   padding: 10px;
   width: 90%;
   margin: 10px;
+  font-size: 16px;
 }
 
 .correct { color: green; font-weight: bold; }
@@ -63,31 +68,16 @@ footer {
 
 <body>
 
-<header id="start">
+<header id="startScreen">
   <h1>FunSchool.com</h1>
-  <p><b>Created by Haron</b></p>
+  <p><strong>Created by Haron</strong></p>
   <button onclick="startSite()">START</button>
 </header>
 
-<section id="login" class="section">
-  <div class="card">
-    <h2>Student Login</h2>
-    <input id="sUser" placeholder="student">
-    <input id="sPass" type="password" placeholder="1234">
-    <button onclick="studentLogin()">Login</button>
-    <p id="sMsg"></p>
-  </div>
-
-  <div class="card">
-    <h2>Teacher Login</h2>
-    <input id="tUser" placeholder="teacher">
-    <input id="tPass" type="password" placeholder="admin">
-    <button onclick="teacherLogin()">Login</button>
-    <p id="tMsg"></p>
-  </div>
-</section>
-
 <section id="main" class="section">
+
+  <h2>Welcome to FunSchool.com</h2>
+
   <input id="search" placeholder="Search questions..." onkeyup="searchQuestions()">
 
   <div class="card">
@@ -95,88 +85,105 @@ footer {
     <button onclick="openSubject('Science')">Science</button>
     <button onclick="openSubject('English')">English</button>
     <button onclick="openSubject('History')">History</button>
-    <button onclick="openSubject('Computer')">Computer</button>
+    <button onclick="openSubject('Computer')">Computer Computing</button>
   </div>
 
-  <div class="card" id="subjectBox"></div>
+  <div class="card" id="contentBox">
+    <p>Select a subject or search above.</p>
+  </div>
 
   <div class="card">
-    <h2>🎮 Games</h2>
+    <h3>🎮 Games</h3>
     <button onclick="mathGame()">Math Game</button>
     <button onclick="englishGame()">English Game</button>
     <button onclick="scienceGame()">Science Game</button>
+    <button onclick="historyGame()">History Game</button>
+    <button onclick="computerGame()">Computer Game</button>
   </div>
 
-  <div class="card" id="gameBox"></div>
 </section>
 
-<footer>© 2026 FunSchool.com | Haron</footer>
+<footer>
+  © 2026 FunSchool.com | Created by Haron
+</footer>
 
 <script>
 const subjects = {
- Math: ["1+1?", "2+2?", "3+3?", "4+4?", "5+5?", "6+6?", "7+7?", "8+8?", "9+9?", "10+10?"],
- Science: ["What is water?", "Sun is a?", "Humans breathe?", "Plants need?", "Earth shape?", "Moon orbits?", "Gas for fire?", "Animal cells?", "Plants green?", "Gravity?"],
- English: ["What is noun?", "Verb?", "Adjective?", "Sentence?", "Plural?", "Past tense?", "Capital letter?", "Full stop?", "Synonym?", "Antonym?"],
- History: ["What is history?", "Past means?", "Old tools?", "Kings?", "Queens?", "Ancient?", "Modern?", "War?", "Peace?", "Time?"],
- Computer: ["What is computer?", "CPU?", "Keyboard?", "Mouse?", "Screen?", "Coding?", "Internet?", "Data?", "Program?", "Logic?"]
+  Math: [
+    "1 + 1 = ?", "2 + 2 = ?", "5 × 2 = ?", "10 ÷ 2 = ?", "3 + 4 = ?",
+    "6 + 3 = ?", "9 − 4 = ?", "8 × 1 = ?", "12 ÷ 3 = ?", "7 + 3 = ?"
+  ],
+  Science: [
+    "What planet do we live on?", "What gas do we breathe?", "What is water made of?",
+    "What gives us light?", "What do plants need?", "What is gravity?",
+    "Is fire hot or cold?", "What do animals need?", "What is energy?", "Is Earth round?"
+  ],
+  English: [
+    "What is a noun?", "What is a verb?", "What is an adjective?",
+    "What is a sentence?", "What is punctuation?", "What is a synonym?",
+    "What is an antonym?", "What is plural?", "What is a vowel?", "What is grammar?"
+  ],
+  History: [
+    "What is history?", "What is the past?", "Who were kings?",
+    "Who were queens?", "What is ancient?", "What is modern?",
+    "Why do we learn history?", "What is a timeline?", "What is a war?", "What is peace?"
+  ],
+  Computer: [
+    "What is a computer?", "What is a keyboard?", "What is a mouse?",
+    "What does CPU mean?", "What is coding?", "What is the internet?",
+    "What is data?", "What is software?", "What is hardware?", "What is logic?"
+  ]
 };
 
 function startSite() {
- document.getElementById("start").style.display="none";
- document.getElementById("login").style.display="block";
+  document.getElementById("startScreen").style.display = "none";
+  document.getElementById("main").style.display = "block";
 }
 
-function studentLogin() {
- if(sUser.value==="student" && sPass.value==="1234"){
-   sMsg.textContent="Student logged in!";
-   showMain();
- } else sMsg.textContent="Wrong login";
+function openSubject(subject) {
+  const box = document.getElementById("contentBox");
+  box.innerHTML = `<h3>${subject} Questions</h3>`;
+  subjects[subject].forEach(q => {
+    box.innerHTML += `<p>• ${q}</p>`;
+  });
 }
 
-function teacherLogin() {
- if(tUser.value==="teacher" && tPass.value==="admin"){
-   tMsg.textContent="Teacher logged in!";
-   showMain();
- } else tMsg.textContent="Wrong login";
+function searchQuestions() {
+  const text = document.getElementById("search").value.toLowerCase();
+  const box = document.getElementById("contentBox");
+  box.innerHTML = "<h3>Search Results</h3>";
+  let found = false;
+
+  for (let subject in subjects) {
+    subjects[subject].forEach(q => {
+      if (q.toLowerCase().includes(text)) {
+        box.innerHTML += `<p>• ${q}</p>`;
+        found = true;
+      }
+    });
+  }
+
+  if (!found) box.innerHTML += "<p>No results found.</p>";
 }
 
-function showMain(){
- document.getElementById("login").style.display="none";
- document.getElementById("main").style.display="block";
+function mathGame() {
+  contentBox.innerHTML = "<h3>Math Game</h3><p>6 + 4 = ?</p><button onclick=\"contentBox.innerHTML='Correct! 🎉'\">10</button>";
 }
 
-function openSubject(sub){
- const box=document.getElementById("subjectBox");
- box.innerHTML="<h3>"+sub+"</h3>";
- subjects[sub].forEach(q=>box.innerHTML+="<p>• "+q+"</p>");
+function englishGame() {
+  contentBox.innerHTML = "<h3>English Game</h3><p>Click the noun:</p><button>Run</button><button onclick=\"contentBox.innerHTML='Correct! 🎉'\">Cat</button>";
 }
 
-function searchQuestions(){
- const text=search.value.toLowerCase();
- const box=document.getElementById("subjectBox");
- box.innerHTML="<h3>Search Results</h3>";
- let found=false;
- for(let s in subjects){
-   subjects[s].forEach(q=>{
-     if(q.toLowerCase().includes(text)){
-       box.innerHTML+="<p>• "+q+"</p>";
-       found=true;
-     }
-   });
- }
- if(!found) box.innerHTML+="<p>No results</p>";
+function scienceGame() {
+  contentBox.innerHTML = "<h3>Science Game</h3><p>The Sun is a?</p><button onclick=\"contentBox.innerHTML='Correct! 🌞'\">Star</button>";
 }
 
-function mathGame(){
- gameBox.innerHTML="<h3>Math Game</h3><p>5 + 5 = ?</p><button onclick='gameBox.innerHTML=\"Correct!\"'>10</button>";
+function historyGame() {
+  contentBox.innerHTML = "<h3>History Game</h3><p>History is about the?</p><button onclick=\"contentBox.innerHTML='Correct! 📜'\">Past</button>";
 }
 
-function englishGame(){
- gameBox.innerHTML="<h3>English Game</h3><p>Click the noun:</p><button>Run</button><button onclick='gameBox.innerHTML=\"Correct!\"'>Dog</button>";
-}
-
-function scienceGame(){
- gameBox.innerHTML="<h3>Science Game</h3><p>Earth is a?</p><button onclick='gameBox.innerHTML=\"Correct!\"'>Planet</button>";
+function computerGame() {
+  contentBox.innerHTML = "<h3>Computer Game</h3><p>CPU is the?</p><button onclick=\"contentBox.innerHTML='Correct! 💻'\">Brain</button>";
 }
 </script>
 
