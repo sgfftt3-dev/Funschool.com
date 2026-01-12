@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FunSchool.com | Created by Haron</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f4f7;
+  text-align: center;
+}
+
+header {
+  background: #2ecc71;
+  color: white;
+  padding: 40px 20px;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #3498db;
+  color: white;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+.section {
+  padding: 30px 20px;
+  display: none;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  margin: 15px auto;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+input {
+  padding: 10px;
+  width: 90%;
+  margin: 10px 0;
+}
+
+.subject-btn {
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+}
+
+.correct { color: green; }
+.wrong { color: red; }
+
+footer {
+  background: #2c3e50;
+  color: white;
+  padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header id="startScreen">
+  <h1>FunSchool.com</h1>
+  <p>Learning Made Fun</p>
+  <button onclick="startSite()">START</button>
+</header>
+
+<section id="main" class="section">
+  <h2>Welcome to FunSchool.com</h2>
+  <p><strong>Created by Haron</strong></p>
+
+  <input type="text" id="search" placeholder="Search questions..." onkeyup="searchQuestions()">
+
+  <div class="card">
+    <h3>Subjects</h3>
+    <button class="subject-btn" onclick="loadSubject('Math')">Math</button>
+    <button class="subject-btn" onclick="loadSubject('Science')">Science</button>
+    <button class="subject-btn" onclick="loadSubject('History')">History</button>
+    <button class="subject-btn" onclick="loadSubject('English')">English</button>
+    <button class="subject-btn" onclick="loadSubject('Computer')">Computer Computing</button>
+  </div>
+
+  <div class="card" id="questionsBox"></div>
+
+  <div class="card">
+    <h3>🎮 Quiz Game</h3>
+    <p id="gameQ"></p>
+    <button onclick="answer(true)">True</button>
+    <button onclick="answer(false)">False</button>
+    <p id="gameResult"></p>
+  </div>
+</section>
+
+<footer>
+  © 2026 FunSchool.com | Created by Haron
+</footer>
+
+<script>
+const questions = {
+  Math: [
+    "What is 5 + 5?",
+    "What is 10 × 2?",
+    "What is 20 ÷ 4?"
+  ],
+  Science: [
+    "What planet do we live on?",
+    "What gas do humans breathe?",
+    "What is water made of?"
+  ],
+  History: [
+    "Who was the first king?",
+    "What is history?",
+    "Why do we learn history?"
+  ],
+  English: [
+    "What is a noun?",
+    "What is a verb?",
+    "What is a sentence?"
+  ],
+  Computer: [
+    "What is a computer?",
+    "What does CPU mean?",
+    "What is coding?"
+  ]
+};
+
+function startSite() {
+  document.getElementById("startScreen").style.display = "none";
+  document.getElementById("main").style.display = "block";
+}
+
+function loadSubject(subject) {
+  const box = document.getElementById("questionsBox");
+  box.innerHTML = `<h3>${subject} Questions</h3>`;
+  questions[subject].forEach(q => {
+    box.innerHTML += `<p>• ${q}</p>`;
+  });
+}
+
+function searchQuestions() {
+  const input = document.getElementById("search").value.toLowerCase();
+  const box = document.getElementById("questionsBox");
+  box.innerHTML = "<h3>Search Results</h3>";
+  for (let subject in questions) {
+    questions[subject].forEach(q => {
+      if (q.toLowerCase().includes(input)) {
+        box.innerHTML += `<p>• ${q}</p>`;
+      }
+    });
+  }
+}
+
+const gameQuestions = [
+  { q: "The Earth is round.", a: true },
+  { q: "2 + 2 = 5.", a: false },
+  { q: "Computers use electricity.", a: true }
+];
+
+let gameIndex = 0;
+
+document.getElementById("gameQ").textContent = gameQuestions[0].q;
+
+function answer(choice) {
+  const result = document.getElementById("gameResult");
+  if (choice === gameQuestions[gameIndex].a) {
+    result.textContent = "Correct ✅";
+    result.className = "correct";
+  } else {
+    result.textContent = "Wrong ❌";
+    result.className = "wrong";
+  }
+  gameIndex = (gameIndex + 1) % gameQuestions.length;
+  document.getElementById("gameQ").textContent = gameQuestions[gameIndex].q;
+}
+</script>
+
+</body>
+</html>
