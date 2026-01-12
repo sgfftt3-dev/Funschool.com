@@ -1,190 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>FunSchool.com | Created by Haron</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>FunSchool.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #ecfdf5;
-  text-align: center;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      text-align: center;
+    }
 
-header {
-  background: linear-gradient(90deg, #2ecc71, #f1c40f);
-  padding: 50px 20px;
-  color: #1f2937;
-}
+    header {
+      background: linear-gradient(to right, #2ecc71, #f1c40f);
+      color: white;
+      padding: 30px 15px;
+    }
 
-button {
-  background: #3498db;
-  color: white;
-  padding: 12px 18px;
-  margin: 6px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-}
+    button {
+      padding: 12px 20px;
+      margin: 8px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
 
-button:hover {
-  background: #2980b9;
-}
+    .start-btn {
+      background: #2ecc71;
+      color: white;
+      font-size: 18px;
+    }
 
-.section {
-  display: none;
-  padding: 25px;
-}
+    .subject-btn {
+      background: #3498db;
+      color: white;
+      width: 90%;
+      max-width: 300px;
+    }
 
-.card {
-  background: white;
-  padding: 20px;
-  margin: 15px auto;
-  max-width: 700px;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-}
+    .back-btn {
+      background: #e67e22;
+      color: white;
+    }
 
-input {
-  padding: 10px;
-  width: 90%;
-  margin: 10px;
-  font-size: 16px;
-}
+    .box {
+      background: white;
+      margin: 15px;
+      padding: 20px;
+      border-radius: 8px;
+    }
 
-.correct { color: green; font-weight: bold; }
-.wrong { color: red; font-weight: bold; }
+    .hidden {
+      display: none;
+    }
 
-footer {
-  background: #1f2937;
-  color: white;
-  padding: 15px;
-}
-</style>
+    .question {
+      margin: 8px 0;
+      text-align: left;
+    }
+  </style>
 </head>
 
 <body>
 
-<header id="startScreen">
-  <h1>FunSchool.com</h1>
-  <p><strong>Created by Haron</strong></p>
-  <button onclick="startSite()">START</button>
+<header id="home">
+  <h1>Welcome to FunSchool.com</h1>
+  <p>Created by Haron</p>
+  <button class="start-btn" onclick="start()">START</button>
 </header>
 
-<section id="main" class="section">
+<div id="subjects" class="hidden box">
+  <h2>Choose a Subject</h2>
 
-  <h2>Welcome to FunSchool.com</h2>
+  <button class="subject-btn" onclick="openSubject('math')">Math</button><br>
+  <button class="subject-btn" onclick="openSubject('science')">Science</button><br>
+  <button class="subject-btn" onclick="openSubject('english')">English</button><br>
+  <button class="subject-btn" onclick="openSubject('history')">History</button><br>
+  <button class="subject-btn" onclick="openSubject('computing')">Computing</button>
+</div>
 
-  <input id="search" placeholder="Search questions..." onkeyup="searchQuestions()">
-
-  <div class="card">
-    <button onclick="openSubject('Math')">Math</button>
-    <button onclick="openSubject('Science')">Science</button>
-    <button onclick="openSubject('English')">English</button>
-    <button onclick="openSubject('History')">History</button>
-    <button onclick="openSubject('Computer')">Computer Computing</button>
-  </div>
-
-  <div class="card" id="contentBox">
-    <p>Select a subject or search above.</p>
-  </div>
-
-  <div class="card">
-    <h3>🎮 Games</h3>
-    <button onclick="mathGame()">Math Game</button>
-    <button onclick="englishGame()">English Game</button>
-    <button onclick="scienceGame()">Science Game</button>
-    <button onclick="historyGame()">History Game</button>
-    <button onclick="computerGame()">Computer Game</button>
-  </div>
-
-</section>
-
-<footer>
-  © 2026 FunSchool.com | Created by Haron
-</footer>
+<div id="content" class="hidden box">
+  <h2 id="title"></h2>
+  <div id="questions"></div>
+  <br>
+  <button class="back-btn" onclick="goBack()">Back</button>
+</div>
 
 <script>
-const subjects = {
-  Math: [
-    "1 + 1 = ?", "2 + 2 = ?", "5 × 2 = ?", "10 ÷ 2 = ?", "3 + 4 = ?",
-    "6 + 3 = ?", "9 − 4 = ?", "8 × 1 = ?", "12 ÷ 3 = ?", "7 + 3 = ?"
-  ],
-  Science: [
-    "What planet do we live on?", "What gas do we breathe?", "What is water made of?",
-    "What gives us light?", "What do plants need?", "What is gravity?",
-    "Is fire hot or cold?", "What do animals need?", "What is energy?", "Is Earth round?"
-  ],
-  English: [
-    "What is a noun?", "What is a verb?", "What is an adjective?",
-    "What is a sentence?", "What is punctuation?", "What is a synonym?",
-    "What is an antonym?", "What is plural?", "What is a vowel?", "What is grammar?"
-  ],
-  History: [
-    "What is history?", "What is the past?", "Who were kings?",
-    "Who were queens?", "What is ancient?", "What is modern?",
-    "Why do we learn history?", "What is a timeline?", "What is a war?", "What is peace?"
-  ],
-  Computer: [
-    "What is a computer?", "What is a keyboard?", "What is a mouse?",
-    "What does CPU mean?", "What is coding?", "What is the internet?",
-    "What is data?", "What is software?", "What is hardware?", "What is logic?"
-  ]
-};
+  const data = {
+    math: [
+      "1) What is 5 + 7?",
+      "2) What is 12 × 2?",
+      "3) What is 20 ÷ 4?",
+      "4) What is 9 − 3?",
+      "5) What is 6 × 6?",
+      "6) What is 15 + 5?",
+      "7) What is 10 ÷ 2?",
+      "8) What is 7 + 8?",
+      "9) What is 18 − 9?",
+      "10) What is 4 × 5?"
+    ],
+    science: [
+      "1) What gas do plants breathe in?",
+      "2) What planet do we live on?",
+      "3) What force pulls things down?",
+      "4) What do humans breathe?",
+      "5) Is the sun a star?",
+      "6) What organ pumps blood?",
+      "7) What do plants need to grow?",
+      "8) What state is ice?",
+      "9) What is water made of?",
+      "10) Is electricity energy?"
+    ],
+    english: [
+      "1) What is a noun?",
+      "2) What is a verb?",
+      "3) What is an adjective?",
+      "4) What is a sentence?",
+      "5) What is punctuation?",
+      "6) What is a question mark?",
+      "7) What is reading?",
+      "8) What is writing?",
+      "9) What is a paragraph?",
+      "10) What is spelling?"
+    ],
+    history: [
+      "1) What is history?",
+      "2) Who were the Romans?",
+      "3) What is a king?",
+      "4) What is a queen?",
+      "5) What is a war?",
+      "6) What is peace?",
+      "7) What is a timeline?",
+      "8) What is the past?",
+      "9) What is the future?",
+      "10) Why do we study history?"
+    ],
+    computing: [
+      "1) What is a computer?",
+      "2) What is the internet?",
+      "3) What is coding?",
+      "4) What is a keyboard?",
+      "5) What is a mouse?",
+      "6) What is a screen?",
+      "7) What is a website?",
+      "8) What is data?",
+      "9) What is software?",
+      "10) What is hardware?"
+    ]
+  };
 
-function startSite() {
-  document.getElementById("startScreen").style.display = "none";
-  document.getElementById("main").style.display = "block";
-}
+  function start() {
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("subjects").classList.remove("hidden");
+  }
 
-function openSubject(subject) {
-  const box = document.getElementById("contentBox");
-  box.innerHTML = `<h3>${subject} Questions</h3>`;
-  subjects[subject].forEach(q => {
-    box.innerHTML += `<p>• ${q}</p>`;
-  });
-}
+  function openSubject(subject) {
+    document.getElementById("subjects").classList.add("hidden");
+    document.getElementById("content").classList.remove("hidden");
 
-function searchQuestions() {
-  const text = document.getElementById("search").value.toLowerCase();
-  const box = document.getElementById("contentBox");
-  box.innerHTML = "<h3>Search Results</h3>";
-  let found = false;
+    document.getElementById("title").innerText =
+      subject.charAt(0).toUpperCase() + subject.slice(1);
 
-  for (let subject in subjects) {
-    subjects[subject].forEach(q => {
-      if (q.toLowerCase().includes(text)) {
-        box.innerHTML += `<p>• ${q}</p>`;
-        found = true;
-      }
+    const qBox = document.getElementById("questions");
+    qBox.innerHTML = "";
+
+    data[subject].forEach(q => {
+      const p = document.createElement("p");
+      p.className = "question";
+      p.innerText = q;
+      qBox.appendChild(p);
     });
   }
 
-  if (!found) box.innerHTML += "<p>No results found.</p>";
-}
-
-function mathGame() {
-  contentBox.innerHTML = "<h3>Math Game</h3><p>6 + 4 = ?</p><button onclick=\"contentBox.innerHTML='Correct! 🎉'\">10</button>";
-}
-
-function englishGame() {
-  contentBox.innerHTML = "<h3>English Game</h3><p>Click the noun:</p><button>Run</button><button onclick=\"contentBox.innerHTML='Correct! 🎉'\">Cat</button>";
-}
-
-function scienceGame() {
-  contentBox.innerHTML = "<h3>Science Game</h3><p>The Sun is a?</p><button onclick=\"contentBox.innerHTML='Correct! 🌞'\">Star</button>";
-}
-
-function historyGame() {
-  contentBox.innerHTML = "<h3>History Game</h3><p>History is about the?</p><button onclick=\"contentBox.innerHTML='Correct! 📜'\">Past</button>";
-}
-
-function computerGame() {
-  contentBox.innerHTML = "<h3>Computer Game</h3><p>CPU is the?</p><button onclick=\"contentBox.innerHTML='Correct! 💻'\">Brain</button>";
-}
+  function goBack() {
+    document.getElementById("content").classList.add("hidden");
+    document.getElementById("subjects").classList.remove("hidden");
+  }
 </script>
 
 </body>
